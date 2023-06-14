@@ -1,2 +1,2 @@
-docker build -t jcgurango/lemmy:latest -f docker/dev/Dockerfile .
+docker build -t jcgurango/lemmy:latest -f docker/prod/Dockerfile .
 docker push jcgurango/lemmy

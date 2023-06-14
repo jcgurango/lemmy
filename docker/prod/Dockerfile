@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY ./ ./
 
-RUN echo "pub const VERSION: &str = \"$(git describe --tag)\";" > "crates/utils/src/version.rs"
+RUN echo "pub const VERSION: &str = \"$(git log --format=%H -n 1 | head -c 6)\";" > "crates/utils/src/version.rs"
 RUN cargo build --release
 
 RUN cp ./target/$CARGO_BUILD_TARGET/$RUSTRELEASEDIR/lemmy_server /app/lemmy_server
