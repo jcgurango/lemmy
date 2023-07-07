@@ -15,7 +15,7 @@ COPY . .
 # Debug mode build
 RUN --mount=type=cache,target=/app/target \
     if [ "$RUST_RELEASE_MODE" = "debug" ] ; then \
-      echo "pub const VERSION: &str = \"$(git describe --tag)\";" > "crates/utils/src/version.rs" \
+      echo "pub const VERSION: &str = \"$(git log --format=%H -n 1 | head -c 7)\";" > "crates/utils/src/version.rs" \
       && cargo build --target ${CARGO_BUILD_TARGET} --features ${CARGO_BUILD_FEATURES} \
       && cp ./target/$CARGO_BUILD_TARGET/$RUST_RELEASE_MODE/lemmy_server /app/lemmy_server; \
     fi
@@ -23,7 +23,7 @@ RUN --mount=type=cache,target=/app/target \
 # Release mode build
 RUN \
     if [ "$RUST_RELEASE_MODE" = "release" ] ; then \
-      echo "pub const VERSION: &str = \"$(git describe --tag)\";" > "crates/utils/src/version.rs" \
+      echo "pub const VERSION: &str = \"$(git log --format=%H -n 1 | head -c 7)\";" > "crates/utils/src/version.rs" \
       && cargo build --target ${CARGO_BUILD_TARGET} --features ${CARGO_BUILD_FEATURES} --release \
       && cp ./target/$CARGO_BUILD_TARGET/$RUST_RELEASE_MODE/lemmy_server /app/lemmy_server; \
     fi
